@@ -6,7 +6,7 @@ const ajax = {
         Accept: 'application/json',
         'Content-type': 'application/json',
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(payload),  // js객체->json포맷 문자열
     });
   },
   get(url) {

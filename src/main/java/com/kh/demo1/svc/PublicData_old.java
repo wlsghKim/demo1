@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -12,11 +11,11 @@ import java.net.URLEncoder;
 
 @Slf4j
 @Service
-public class PublicData {
+public class PublicData_old {
 
-//    public String getPublicData() {
-//      try {
-  public static void main(String[] args) throws IOException {
+    public String getPublicData() {
+      try {
+//  public static void main(String[] args) throws IOException {
         final String SERVICE_KEY = "bJ0AcEWnYARdHMe24EsPd77ralP%2BiRWLuhIeWgoIBgM%2F4dqlAgbS%2FilwgSiZkbkL9ojCBQHuEZI2TtoMqYzRhA%3D%3D";
         StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/6260000/FoodService/getFoodKr"); /*URL*/
         urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + SERVICE_KEY); /*Service Key*/
@@ -43,11 +42,11 @@ public class PublicData {
         rd.close();
         conn.disconnect();
         log.info("result={}",sb.toString());
-//        return sb.toString();
+        return sb.toString();
 
-//      } catch (Exception e) {
-//        e.printStackTrace();
-//      }
-//      return null;
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+      return null;
     }
 }

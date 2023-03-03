@@ -25,27 +25,6 @@
   </p>
 </form>
 <script type="module">
-  import {ajax} from "/js/common.js";
-  const $chkBtn = document.getElementById('chkBtn');
-  const chkBtn_h = e => {
-    console.log(e);
-    e.preventDefault();
-
-    const businessNm = document.getElementById('businessNm').value;
-    const name = document.getElementById('name').value;
-    const url = `/pubData2/bn2/${businessNm}/${name}`;
-    // 요청 url경로에 데이터 포함
-    //ajax.get(url);
-    /* 요청 헤더에 데이터 포함
-    fetch(url,{
-      method: 'GET',
-      headers:{
-        businessNm, name
-      }
-    });
-    */
-  }
-  $chkBtn.addEventListener('click', chkBtn_h, false);
 </script>
 </body>
 </html>

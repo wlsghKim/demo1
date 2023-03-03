@@ -61,8 +61,9 @@ public class PublicData4 {
         //1)  json포맷 문자열 => 자바객체
         ObjectMapper objectMapper = new ObjectMapper();
         BusinessStatusChk businessStatusChk = objectMapper.readValue(response.getBody(), BusinessStatusChk.class);
+        log.info("businessStatusChk={}",businessStatusChk);
         //2)
-        if(businessStatusChk.getStatus_code().equals("ok")){
+        if(businessStatusChk.getStatus_code().equals("OK")){
 
           switch (businessStatusChk.getData().get(0).getB_stt_cd()){
             case "01": //계속사업자
@@ -76,6 +77,9 @@ public class PublicData4 {
             case "03": //폐업자
               map.put("03","폐업자");
               break;
+            default : //기타
+                map.put("00","기타");
+                break;
           }
         }
       } else {

@@ -1,6 +1,7 @@
 package com.kh.demo1.web;
 
 import com.kh.demo1.svc.PublicData4;
+import com.kh.demo1.web.api.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -30,15 +31,17 @@ public class PublicData2Controller {
 
   @ResponseBody
   @PostMapping("/bn10")
-  public Map<String,String> businessNumberChk10_1(
+  public ApiResponse<Object> businessNumberChk10_1(
       @RequestBody String businessNo
   ){
     log.info("businessNo={}",businessNo);
     Map<String, String> publicData = publicData4.getPublicData(businessNo);
-    log.info("publicData",publicData);
-    return publicData;
+    //응답메세지
+    ApiResponse<Object> response = ApiResponse.createApiResMsg("00","성공",publicData);
+    log.info("publicData",publicData.toString());
+    log.info("response",response.toString());
+    return response;
   }
-
 
   @GetMapping("/bn2")
   public String businessNumberChk2(){

@@ -2,9 +2,10 @@ package com.kh.demo1.web;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 
 @Slf4j   // log.info(),log.error(),log.debug(),log.trace(),log.warning()
 @Controller
@@ -20,9 +21,22 @@ public class PublicData2Controller {
   public String businessNumberChk2(){
     return "pub/businessNumberChk2";
   }
-  //1) 쿼리파라미터
   @GetMapping("/bn3")
-  public String businessNumberChk2(
+  public String businessNumberChk3(){
+    return "pub/businessNumberChk3";
+  }
+  @GetMapping("/bn4")
+  public String businessNumberChk4(){
+    return "pub/businessNumberChk4";
+  }
+  @GetMapping("/bn5")
+  public String businessNumberChk5(){
+    return "pub/businessNumberChk5";
+  }
+
+  //1) 쿼리파라미터
+  @GetMapping("/bn2_1")
+  public String businessNumberChk2_1(
       @RequestParam("businessNm") String businessNm,
       @RequestParam("name") String name
   ){
@@ -30,5 +44,39 @@ public class PublicData2Controller {
     log.info("businessNm={}", businessNm);
     log.info("name={}", name);
     return "pub/businessNumberChk2";
+  }
+  //2) url 경로
+  @GetMapping("/bn3_1/{businessNm}/{name}")
+  public String businessNumberChk3_1(
+      @PathVariable("businessNm") String businessNm,
+      @PathVariable("name") String name
+  ){
+
+    log.info("businessNm={}", businessNm);
+    log.info("name={}", name);
+    return "pub/businessNumberChk3";
+  }
+
+  //3) 요청메소드 바디
+  @PostMapping("/bn4_1")
+  public String businessNumberChk4_1(
+      @RequestParam("businessNm") String businessNm,
+      @RequestParam("name") String name
+  ){
+
+    log.info("businessNm={}", businessNm);
+    log.info("name={}", name);
+    return "pub/businessNumberChk4";
+  }
+  //4) 요청메소드 헤더
+  @PostMapping("/bn5_1")
+  public String businessNumberChk5_1(
+      @RequestHeader("businessNm") String businessNm,
+      @RequestHeader("name") String name
+  ) throws UnsupportedEncodingException {
+
+    log.info("businessNm={}", URLDecoder.decode(businessNm,"utf-8"));
+    log.info("name={}", URLDecoder.decode(name,"utf-8"));
+    return "pub/businessNumberChk5";
   }
 }

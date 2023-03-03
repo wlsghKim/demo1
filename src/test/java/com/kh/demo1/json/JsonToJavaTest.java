@@ -1,13 +1,17 @@
 package com.kh.demo1.json;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+@Slf4j
 public class JsonToJavaTest {
   @Test
-  void test1(){
+  void test1() throws JsonProcessingException {
     String json = "{\n" +
         "    \"request_cnt\": 1,\n" +
         "    \"match_cnt\": 1,\n" +
@@ -27,29 +31,36 @@ public class JsonToJavaTest {
         "    ]\n" +
         "}";
 
-    Root r = new Root();
-    r.setRequest_cnt(1);
-    int request_cnt = r.getRequest_cnt();
+    ObjectMapper objectMapper = new ObjectMapper();
+    Root root = objectMapper.readValue(json, Root.class);
+    log.info("root={}",root);
+    for( Root.Datum datum : root.getData()){
+      log.info("사업자번호={}",datum.getB_no());
+      datum.setB_no("111");
+    }
+
+    String jsonFormatString = objectMapper.writeValueAsString(root);
+    log.info("jsonFormatString={}", jsonFormatString);
   }
 
   @Data  //toString(), getter(), setter(), equals(), hashCode()
-  public class Root{
+  static class Root{
     private int request_cnt;
     private int match_cnt;
     private String status_code;
     private ArrayList<Datum> data;
+    @Data
+    static class Datum{
+      private String b_no;
+      private String b_stt;
+      private String b_stt_cd;
+      private String tax_type;
+      private String tax_type_cd;
+      private String end_dt;
+      private String utcc_yn;
+      private String tax_type_change_dt;
+      private String invoice_apply_dt;
+    }
   }
 
-  @Data
-  public class Datum{
-    private String b_no;
-    private String b_stt;
-    private String b_stt_cd;
-    private String tax_type;
-    private String tax_type_cd;
-    private String end_dt;
-    private String utcc_yn;
-    private String tax_type_change_dt;
-    private String invoice_apply_dt;
-  }
 }

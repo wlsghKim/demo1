@@ -3,14 +3,13 @@ package com.kh.demo1.svc;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
-import java.net.URLEncoder;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Collections;
 
 @Slf4j
@@ -18,21 +17,19 @@ import java.util.Collections;
 public class PublicData3 {
   //    public String getPublicData() {
 //      try {
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) throws IOException, URISyntaxException {
     final String SERVICE_KEY = "bJ0AcEWnYARdHMe24EsPd77ralP%2BiRWLuhIeWgoIBgM%2F4dqlAgbS%2FilwgSiZkbkL9ojCBQHuEZI2TtoMqYzRhA%3D%3D";
-    StringBuilder urlBuilder = new StringBuilder("http://api.odcloud.kr/api/nts-businessman/v1/status"); /*URL*/
-    urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + SERVICE_KEY); /*Service Key*/
-    urlBuilder.append("&" + URLEncoder.encode("resultType", "UTF-8") + "=" + URLEncoder.encode("JSON", "UTF-8")); /*JSON방식으로 호출 시 파라미터 resultType=json 입력*/
-
     UriComponents complexUrl = UriComponentsBuilder
-        .fromUriString("http://api.odcloud.kr/api/nts-businessman/v1/status")
+        .fromUriString("http://apis.data.go.kr/6260000/FoodService/getFoodKr")
 //        .uriVariables(Map.of("nickname", "dailycode"))
         .queryParam("serviceKey", SERVICE_KEY)
-        .queryParam("resultType", "JSON")
-        .build();  //encode() 해주면 toUriString 사용시 한글에 대한 URL 엔코딩도 해준다
+        .queryParam("pageNo", "1")
+        .queryParam("numOfRows", "10")
+        .queryParam("resultType", "json")
+        .build();
 
     // request url
-    String url = urlBuilder.toString();
+    String url = complexUrl.toString();
 
     // create an instance of RestTemplate
     RestTemplate restTemplate = new RestTemplate();
@@ -45,13 +42,14 @@ public class PublicData3 {
     headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 
     // build the request
-    MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-    params.add("b_no", "1234");
-    HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
 
-    // make an HTTP GET request with headers
+//    HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params,headers);
+    String body = "{ \"b_no\": [\"6212002123\"]}";
+    RequestEntity request = new RequestEntity(body,headers,HttpMethod.POST,new URI(url),String.class);
+    log.info("{}",request.getBody());
+//    // make an HTTP GET request with headers
     ResponseEntity<String> response = restTemplate.exchange(
-        url,
+        new URI(url),
         HttpMethod.POST,
         request,
         String.class

@@ -29,7 +29,7 @@
   //사업자진위확인
   const $chkBtn2 = document.getElementById('chkBtn2');
   $chkBtn2.addEventListener('click',businessTrulyChk_h,false);
-  const businessTrulyRequestParma = {};
+  const businessTrulyRequestParm = {};
 
 
   //사업자 상태확인
@@ -51,7 +51,7 @@
             document.querySelector('.item.item2').classList.remove('hidden');
 
             //진위확인 파라미터
-            businessTrulyRequestParma.b_no = res.data[0].b_no;  //사업자 등록번호
+            businessTrulyRequestParm.b_no = res.data[0].b_no;  //사업자 등록번호
 
             break;
           case "02": //휴업자
@@ -81,7 +81,7 @@
     const $p_nm = document.getElementById('p_nm');
     const payLoad = {
       businesses : [
-        { ...businessTrulyRequestParma,
+        { ...businessTrulyRequestParm,
           start_dt : $start_dt.value,
           p_nm : $p_nm.value
         }
@@ -93,8 +93,10 @@
       if(res.status_code == 'OK'){
         switch(res.data[0].valid){
           case "01":  //Valid  유효
+            console.log('유효한 사업자')
             break;
           case "02":  //Invalid
+
             throw new Error(`${res.data[0].valid_msg}`);
             break;
         }

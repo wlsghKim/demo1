@@ -3,6 +3,7 @@ package com.kh.demo1.svc;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -42,26 +43,21 @@ public class PublicData3 {
     headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 
     // build the request
+    HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(headers);
 
-//    HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params,headers);
-    String body = "{ \"b_no\": [\"6212002123\"]}";
-    RequestEntity request = new RequestEntity(body,headers,HttpMethod.POST,new URI(url),String.class);
-    log.info("{}",request.getBody());
-//    // make an HTTP GET request with headers
+    // make an HTTP GET request with headers
     ResponseEntity<String> response = restTemplate.exchange(
         new URI(url),
-        HttpMethod.POST,
+        HttpMethod.GET,
         request,
         String.class
     );
 
     // check response
     if (response.getStatusCode() == HttpStatus.OK) {
-      System.out.println("Request Successful.");
-      System.out.println(response.getBody());
+      log.info("Request Successful={}",response.getBody());
     } else {
-      System.out.println("Request Failed");
-      System.out.println(response.getStatusCode());
+      log.info("Request Failed={}",response.getStatusCode());
     }
   }
 }

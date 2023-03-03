@@ -1,21 +1,44 @@
 package com.kh.demo1.web;
 
+import com.kh.demo1.svc.PublicData4;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.Map;
 
 @Slf4j   // log.info(),log.error(),log.debug(),log.trace(),log.warning()
 @Controller
 @RequestMapping("/pubData2")
+@RequiredArgsConstructor
 public class PublicData2Controller {
+
+  private final PublicData4 publicData4;
 
   @GetMapping("/bn")
   public String businessNumberChk(){
     return "pub/businessNumberChk";
   }
+
+  @GetMapping("/bn10")
+  public String businessNumberChk10(){
+    return "pub/businessNumberChk10";
+  }
+
+  @ResponseBody
+  @PostMapping("/bn10")
+  public Map<String,String> businessNumberChk10_1(
+      @RequestBody String businessNo
+  ){
+    log.info("businessNo={}",businessNo);
+    Map<String, String> publicData = publicData4.getPublicData(businessNo);
+    log.info("publicData",publicData);
+    return publicData;
+  }
+
 
   @GetMapping("/bn2")
   public String businessNumberChk2(){

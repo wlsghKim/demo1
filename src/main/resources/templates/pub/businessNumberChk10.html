@@ -20,37 +20,45 @@
         <button id="chkBtn">확인</button>
       </p>
       <p class="item item2 hidden">
-        <label for="start_dt">개업일자</label
-        ><input type="text" id="start_dt" /> <label for="p_nm">대표자명</label
-        ><input type="text" id="p_nm" />
+        <label for="start_dt">개업일자</label>
+        <input type="text" id="start_dt" />
+        <label for="p_nm">대표자명</label>
+        <input type="text" id="p_nm" />
         <button id="chkBtn2">확인</button>
       </p>
     </form>
     <script type="module">
       import { ajax } from '/js/common.js';
-      const $chkBtn = document.getElementById('chkBtn');
       const $msg = document.querySelector('.msg');
+      const $chkBtn = document.getElementById('chkBtn');
+      const $chkBtn2 = document.getElementById('chkBtn2');
 
+      //사업자 등록상태조회
       const chkBtn = res => {
         if (res.header.rtcd == '00') {
-          if ('01' in res.data) {  //계속사업자
+          if ('01' in res.data) {
+            //계속사업자
             console.log(res.data['01']);
-            const $item2 = document.querySelector('.item.item2')
-            if($item2.classList.contains('hidden')){
+            const $item2 = document.querySelector('.item.item2');
+            if ($item2.classList.contains('hidden')) {
               $item2.classList.remove('hidden');
             }
             return;
           }
-          if ('02' in res.data) { //휴업자
+          if ('02' in res.data) {
+            //휴업자
             $msg.textContent = '휴업자';
             return;
           }
-          if ('03' in res.data) { //폐업자
+          if ('03' in res.data) {
+            //폐업자
             $msg.textContent = '폐업자';
             return;
           }
-          if ('00' in res.data) { //기타
-            $msg.textContent = '기타';
+          if ('00' in res.data) {
+            //기타
+            $msg.textContent = '사업자를 찾을 수 없습니다.';
+            document.getElementById('businessNo').focus();
             return;
           }
         } else {
@@ -73,6 +81,48 @@
           .catch(err => console.log(err));
       };
       $chkBtn.addEventListener('click', chkBtn_h, false);
+
+      //사업자 진위 확인
+      const chkBtn2 = res => {
+        console.log(res);
+      };
+
+      const chkBtn2_h = e => {
+        e.preventDefault();
+
+        //유효성 체크
+        const $start_dt = document.getElementById('start_dt'); //개업일
+        const $p_nm = document.getElementById('p_nm'); //대표자명
+
+        if ($start_dt.value.trim().length < 1) {
+          $msg.textContent = '개업일자가 누락되었습니다.';
+          $start_dt.focus();
+          return;
+        }
+        if ($p_nm.value.trim().length < 1) {
+          $msg.textContent = '대표자명이 누락되었습니다.';
+          $p_nm.focus();
+          return;
+        }
+
+        const url = `/pubData2/bn11`;
+        const payLoad = {
+          businesses: [
+            {
+              b_no: document.getElementById('businessNo').value,
+              start_dt: $start_dt.value,
+              p_nm: $p_nm.value,
+            },
+          ],
+        };
+
+        ajax
+          .post(url, payLoad)
+          .then(res => res.json())
+          .then(res => chkbtn2(res))
+          .catch(err => console.log(err));
+      };
+      $chkBtn2.addEventListener('click', chkBtn2_h, false);
     </script>
   </body>
 </html>

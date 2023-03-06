@@ -42,6 +42,26 @@ public class PublicData2Controller {
     log.info("response",response.toString());
     return response;
   }
+  @ResponseBody
+  @PostMapping("/bn11")
+  public ApiResponse<Object> businessNumberChk11_1(
+      @RequestBody String json  //{"b_no":"6108610288","start_dt":"1","p_nm":"1"}
+  ){
+    log.info("json={}",json);
+    Map<String, String> publicData = publicData4.getPublicData2(json);
+    //응답메세지
+//    ApiResponse<Object> response = ApiResponse.createApiResMsg("00","성공",publicData);
+//    log.info("publicData",publicData.toString());
+//    log.info("response",response.toString());
+//    return response;
+    return null;
+  }
+
+
+
+
+
+
 
   @GetMapping("/bn2")
   public String businessNumberChk2(){

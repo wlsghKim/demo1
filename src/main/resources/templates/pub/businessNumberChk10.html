@@ -43,6 +43,9 @@
             if ($item2.classList.contains('hidden')) {
               $item2.classList.remove('hidden');
             }
+            document.getElementById('businessNo').disabled = true;
+            $chkBtn.disabled = true;
+            //
             return;
           }
           if ('02' in res.data) {
@@ -85,6 +88,18 @@
       //사업자 진위 확인
       const chkBtn2 = res => {
         console.log(res);
+        if (res.status_code == 'OK') {
+          if (res.data[0].valid == '01') {
+            //유효한 사업자
+            console.log('유효한사업자');
+          } else {
+            //무효한 사업자
+            console.log('무효한사업자');
+            $msg.textContent = res.data[0].valid_msg; //확인할 수 없습니다.
+          }
+        } else {
+          throw new Error('서버확인후 재요청!!');
+        }
       };
 
       const chkBtn2_h = e => {
@@ -119,7 +134,7 @@
         ajax
           .post(url, payLoad)
           .then(res => res.json())
-          .then(res => chkbtn2(res))
+          .then(res => chkBtn2(res))
           .catch(err => console.log(err));
       };
       $chkBtn2.addEventListener('click', chkBtn2_h, false);

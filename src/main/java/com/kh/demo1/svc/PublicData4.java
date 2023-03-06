@@ -115,8 +115,8 @@ public class PublicData4 {
 //    }
   }
 
-  public Map<String,String> getPublicData2(String json) {
-    Map<String, String> map = new HashMap<>();
+  public String getPublicData2(String json) {
+
     try {
       UriComponents complexUrl = UriComponentsBuilder
           .fromUriString("http://api.odcloud.kr/api/nts-businessman/v1/validate")
@@ -139,7 +139,6 @@ public class PublicData4 {
       headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 
       // build the request
-//      String body = "{ \"b_no\": [\"6212002123\"]}";
       HttpEntity<String> request = new HttpEntity<>(json, headers);
 
       // make an HTTP GET request with headers
@@ -153,30 +152,7 @@ public class PublicData4 {
       // check response
       if (response.getStatusCode() == HttpStatus.OK) {
         log.info("Request Successful={}", response.getBody());
-        //1)  json포맷 문자열 => 자바객체
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        BusinessStatusChk businessStatusChk = objectMapper.readValue(response.getBody(), BusinessStatusChk.class);
-//        log.info("businessStatusChk={}",businessStatusChk);
-//        //2)
-//        if(businessStatusChk.getStatus_code().equals("OK")){
-//
-//          switch (businessStatusChk.getData().get(0).getB_stt_cd()){
-//            case "01": //계속사업자
-//              //사업자번호
-//              String b_no = businessStatusChk.getData().get(0).getB_no(); //
-//              map.put("01","계속사업자");
-//              break;
-//            case "02": //휴업자
-//              map.put("02","휴업자");
-//              break;
-//            case "03": //폐업자
-//              map.put("03","폐업자");
-//              break;
-//            default : //기타
-//              map.put("00","기타");
-//              break;
-//          }
-//        }
+        return response.getBody();
       } else {
         log.info("Request Failed={}", response.getStatusCode());
       }
@@ -184,27 +160,6 @@ public class PublicData4 {
       log.info(e.getMessage());
     }
 
-    return map;
-
-//    if(res.status_code == 'OK'){
-//      switch(res.data[0].b_stt_cd){ //납세자 상태
-//        case "01": //계속사업자
-//          console.log('계속');
-//          document.querySelector('.item.item2').classList.remove('hidden');
-//
-//          //진위확인 파라미터
-//          businessTrulyRequestParm.b_no = res.data[0].b_no;  //사업자 등록번호
-//
-//          break;
-//        case "02": //휴업자
-//          break;
-//        case "03": //폐업자
-//          break;
-//        default :
-//          throw new Error(`${res.data[0].tax_type}`);
-//      }
-//    }else{
-//      throw new Error(`${res.description}`);
-//    }
+    return null;
   }
 }

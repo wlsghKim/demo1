@@ -13,6 +13,7 @@
   </head>
   <body>
     <form>
+      <div class="msg"></div>
       <p class="item item1">
         <label for="businessNo">사업자번호</label>
         <input type="text" id="businessNo" name="businessNo" />
@@ -28,15 +29,29 @@
     <script type="module">
       import { ajax } from '/js/common.js';
       const $chkBtn = document.getElementById('chkBtn');
+      const $msg = document.querySelector('.msg');
 
       const chkBtn = res => {
         if (res.header.rtcd == '00') {
-          if ('01' in res.data) {
+          if ('01' in res.data) {  //계속사업자
             console.log(res.data['01']);
+            const $item2 = document.querySelector('.item.item2')
+            if($item2.classList.contains('hidden')){
+              $item2.classList.remove('hidden');
+            }
+            return;
           }
-          if ('02' in res.data) {
+          if ('02' in res.data) { //휴업자
+            $msg.textContent = '휴업자';
+            return;
           }
-          if ('03' in res.data) {
+          if ('03' in res.data) { //폐업자
+            $msg.textContent = '폐업자';
+            return;
+          }
+          if ('00' in res.data) { //기타
+            $msg.textContent = '기타';
+            return;
           }
         } else {
           new Error(`${res.header.rtmsg}`);
@@ -45,7 +60,7 @@
 
       const chkBtn_h = e => {
         console.log(e);
-        e.preventDefault();
+        e.preventDefault(); // form.submit() 기본 이벤트 막기
 
         const businessNo = document.getElementById('businessNo').value;
         const url = '/pubData2/bn10';

@@ -32,7 +32,7 @@ public class PublicData2Controller {
   @ResponseBody
   @PostMapping("/bn10")
   public ApiResponse<Object> businessNumberChk10_1(
-      @RequestBody String businessNo
+      @RequestBody String businessNo  //"{"b_no": [ "0000000000"]}
   ){
     log.info("businessNo={}",businessNo);
     Map<String, String> publicData = publicData4.getPublicData(businessNo);

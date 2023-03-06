@@ -52,7 +52,7 @@ public class PublicData4 {
           new URI(url),
           HttpMethod.POST,
           request,
-          String.class
+          String.class    //응답타입
       );
 
       // check response

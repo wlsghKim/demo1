@@ -29,10 +29,10 @@ public class ApiResponse<T> {
    * @param <T> 데이터
    */
   public static <T> ApiResponse<T> createApiResMsg(String rtcd, String rtmsg, T data){
-//    ApiResponse<T> response = null;
-//    Header header = new Header(rtcd, rtmsg);
-//    response = new ApiResponse<>(header, data);
-//    return response;
+  //    ApiResponse<T> response = null;
+  //    Header header = new Header(rtcd, rtmsg);
+  //    response = new ApiResponse<>(header, data);
+  //    return response;
     return new ApiResponse<>(new Header(rtcd, rtmsg), data);
   }
 

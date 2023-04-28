@@ -32,7 +32,7 @@ public class PublicData2Controller {
   @ResponseBody
   @PostMapping("/bn10")
   public ApiResponse<Object> businessNumberChk10_1(
-      @RequestBody String businessNo  //"{"b_no": [ "0000000000"]}
+      @RequestBody String businessNo //"{"b_no": ["0000000"]}"
   ){
     log.info("businessNo={}",businessNo);
     Map<String, String> publicData = publicData4.getPublicData(businessNo);
@@ -42,22 +42,16 @@ public class PublicData2Controller {
     log.info("response",response.toString());
     return response;
   }
+
   @ResponseBody
   @PostMapping("/bn11")
   public String businessNumberChk11_1(
-      @RequestBody String json  //{"b_no":"6108610288","start_dt":"1","p_nm":"1"}
+      @RequestBody String json //"{"b_no": "6108610288", "start_dt": "1", "p_nm": "1"}"
   ){
     log.info("json={}",json);
     String res = publicData4.getPublicData2(json);
-
-    return res;
+      return res;
   }
-
-
-
-
-
-
 
   @GetMapping("/bn2")
   public String businessNumberChk2(){

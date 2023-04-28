@@ -11,27 +11,27 @@ import java.util.ArrayList;
 public class TestController {
 
   @GetMapping("/1")
-  public String t1(){
+  public  String t1(){
     return "상품";
   }
 
   @GetMapping("/2")
-  public Person t2(){
-    Person p = new Person("홍길동",30);
+  public  Person t2(){
+    Person p = new Person("홍길동", 30);
     return p;
   }
   @GetMapping("/3")
-  public ArrayList<Person> t3(){
+  public  ArrayList<Person> t3(){
     ArrayList<Person> persons = new ArrayList<>();
-    persons.add(new Person("홍길동1",10));
-    persons.add(new Person("홍길동2",20));
-    persons.add(new Person("홍길동3",30));
+    persons.add(new Person("홍길동1", 10));
+    persons.add(new Person("홍길동2", 20));
+    persons.add(new Person("홍길동3", 30));
     return persons;
   }
 
   static class Person{
-      String name;
-      int age;
+    String name;
+    int age;
 
     public Person(String name, int age) {
       this.name = name;

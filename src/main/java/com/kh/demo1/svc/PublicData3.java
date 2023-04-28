@@ -19,7 +19,7 @@ public class PublicData3 {
   //    public String getPublicData() {
 //      try {
   public static void main(String[] args) throws IOException, URISyntaxException {
-    final String SERVICE_KEY = "bJ0AcEWnYARdHMe24EsPd77ralP%2BiRWLuhIeWgoIBgM%2F4dqlAgbS%2FilwgSiZkbkL9ojCBQHuEZI2TtoMqYzRhA%3D%3D";
+    final String SERVICE_KEY = "Pns6qPIF4ThDyDFMaN1ZrvBpbg3K0hCniGPcpJ8OH9aIRIjglgxkGsV5V0LPyXt3fAxGmCBz%2BOsCS5GYsuCBaA%3D%3D";
     UriComponents complexUrl = UriComponentsBuilder
         .fromUriString("http://apis.data.go.kr/6260000/FoodService/getFoodKr")
 //        .uriVariables(Map.of("nickname", "dailycode"))
